@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Climate change and energy editorials in UK newspapers</title>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="js/addons/datatables.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/natural.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&family=PT+Sans+Narrow&family=PT+Serif&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="js/jquery.ajax-cross-origin.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
+
+    <!-- <script src="https://cdn.datatables.net/plug-ins/1.11.5/dataRender/datetime.js"></script> -->
+
+    <base target="_parent">
+    
+</head>
+  <body>
+    <div id="table-container">
+    <table id="dTable" class="table table-hover table-striped table-sm table-border" style="width:100%">
+      <div id="header">
+        <div id="header-title">
+          <h1>Climate change and energy editorials in UK newspapers</h1>
+          <p>Filter the data via the dropdown menus or search for a keyword</p>
+          <div id="filterContainer"></div>
+        </div>
+        <!-- <div id="logo">
+          <img src="img/Main-logo.png">
+        </div> -->
+      </div>
+      <!-- <div id="header-clear"></div> -->
+      <thead>
+          <tr>  
+        <th>Date (online publication)</th>
+        <th class="select-filter" data-name="Category">Category</th>
+        <th class="select-filter" data-name="Newspaper">Newspaper</th>
+        <th>Headline</th>
+        <th>Summary</th>
+        <th>URL</th>
+        <th class="select-filter" data-name="Year">Year</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+</div>
+
+<script>
+
+  $(document).ready(function() {
+    $.fn.dataTable.moment( 'DD/MM/YYYY' );
+    var table = $('#dTable').DataTable({
+      
+                  ajax:{url: "https://sheets.googleapis.com/v4/spreadsheets/1uu-zaC6iYsMfhSfS1r3VZoTVrstRGechs0fJJSzDsZo/values/Total!A1:G?alt=json&key=AIzaSyB0QfnIL-dXwkL6PI05tn0LaiLPD1MqZG0", dataSrc:"values"},
+                  lengthChange: false, 
+                  responsive: true,
+                  // ordering: true,
+                  scrollY: "600px",
+                  scrollCollapse: true,
+                  paging: true,
+                  language:{
+                  search: "Search:",
+                  emptyTable: "Retrieving over 1000 editorials..."
+                  },
+                  lengthMenu: [[18, 36, 72, -1], [18, 36, 72, "All"]],
+                  order: [],
+                  
+                  drawCallback: function (settings) {
+                  $('[data-toggle="tooltip"]').tooltip({
+                  });
+                },
+
+
+                rowCallback: function( row, data, index ) {
+                if (data[1] === 'Category') {
+                    // console.log(data[1])
+                    $(row).hide();
+                }
+                
+            },
+              
+
+                columnDefs: [
+                  { visible: false, targets: [5, 6] },
+                  { orderable: false, targets: [3, 4] },
+                  { "orderData":[ 0 ],   "targets": [ 6 ] },
+                  {data: undefined, defaultContent: "", targets: [0, 1, 2, 3, 4, 5, 6]},
+                  {
+                    targets: 2,
+                    render: function ( data, type, row ) {
+                      return '<a href="'+row[5]+'" target="_blank">'+row[2]+'</a>';
+                    }
+                  },
+                  { targets: 4,
+                  render: function checkPosition(data, type, row, meta) {
+                  if (window.matchMedia('(min-width: 401px) and (max-width: 737px)').matches) {
+                      return type === 'display' && data.length > 60 ?
+                      '<div data-toggle="tooltip" disabled title="'+data+'">'+data.substr( 0, 75 ).replace( '&quot;', '"' )+'...</span>' :
+                      data;
+                  } else if (window.matchMedia('(max-width: 400px)').matches){ 
+                      return type === 'display' && data.length > 50 ?
+                      '<div data-toggle="tooltip" disabled title="'+data+'">(Click to expand)</span>' :
+                      data;
+                  } else if (window.matchMedia('(min-width: 738px)').matches){ 
+                    return type === 'display' && data.length > 100 ?
+                      '<div data-toggle="tooltip" disabled title="'+data+'">'+data.substr( 0, 150 )+'...</span>' :
+                      data;
+                    }
+                  }
+                }
+              ],
+
+              initComplete: function () {
+                var category = ['Category - all', 'Newspaper - all', 'Year - all']
+                  for (let i = 0; i < category.length; i++)
+                this.api().columns('.select-filter').every( function () {
+                var column = this;
+                
+                  // console.log(category)
+                var select = $('<select class="ct"><option value="">'+category[i]+'</option></select>')
+                    .appendTo( $('#filterContainer') )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+                  // }
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } ); 
+          });
+          $(".ct option[value='Category']").remove();
+          $(".ct option[value='Newspaper']").remove();
+          $(".ct option[value='Year']").remove();
+            
+        }
+
+              
+              
+    } );
+    
+    
+} );
+</script>
+
+  </body>
+</html>
