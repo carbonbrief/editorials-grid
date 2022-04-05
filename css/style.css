@@ -388,12 +388,10 @@ th:nth-child(1){
   }
   }
 
-@media screen and (min-width:319px){
-    /* div.dataTables_wrapper div .dataTables_filter{
-    justify-content:right;
-    text-align: right;
-    -webkit-box-pack: right;
-    } */
+@media screen and (max-width:380px){
+    table{
+        font-size: 12px;
+    }
 }
 
 
