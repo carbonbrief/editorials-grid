@@ -32,14 +32,17 @@
           <p>Filter the data via the dropdown menus or search for a keyword</p>
           <div id="filterContainer"></div>
         </div>
-        <!-- <div id="logo">
+        <div id="logo" class="large">
           <img src="img/Main-logo.png">
-        </div> -->
+        </div>
+        <div id="logo" class="small">
+          <img src="img/cblogo.png">
+        </div>
       </div>
       <!-- <div id="header-clear"></div> -->
       <thead>
           <tr>  
-        <th>Date (online publication)</th>
+        <th>Date <span class="sm-header">(online publication)</span></th>
         <th class="select-filter" data-name="Category">Category</th>
         <th class="select-filter" data-name="Newspaper">Newspaper</th>
         <th>Headline</th>
@@ -66,7 +69,8 @@
                   scrollCollapse: true,
                   paging: true,
                   language:{
-                  search: "Search:",
+                  search: "",
+                  searchPlaceholder: "Search editorials",
                   emptyTable: "Retrieving over 1000 editorials..."
                   },
                   lengthMenu: [[18, 36, 72, -1], [18, 36, 72, "All"]],
@@ -144,7 +148,9 @@
           $(".ct option[value='Category']").remove();
           $(".ct option[value='Newspaper']").remove();
           $(".ct option[value='Year']").remove();
-            
+          
+
+          $('.col-md-6').css('margin','1.4em 2em').css('width','60%')
         }
 
               
