@@ -179,7 +179,7 @@ tr{
 
 #header{
     width:100%;
-    height:260px;
+    height:290px;
     margin: auto 0;
     background-image: linear-gradient(to bottom, rgba(27, 55, 216, 0.12), rgba(202, 54, 62, 0.23)), url(../img/table-hero.jpg);
     background-position: left;
@@ -188,14 +188,6 @@ tr{
     display: flex;
     position: static;
     z-index: -1;
-}
-
-#header-clear{
-    width: 100%;
-    /* height: 235px; */
-    pointer-events: none;
-    /* border: solid red 1px;
-    padding-top:235px; */
 }
 
 #header-title{
@@ -215,19 +207,24 @@ tr{
 #header-title p{
     font-family: 'PT Serif', serif;
     color:#ffffff;
-    font-size:14px;
+    font-size:15px;
+    text-shadow: 1px 1px 8px #333333;
 }
 
 #logo{
     display: inline-flex;
-    margin-top: 16em;
+    margin-top: 13em;
     width: 5%;
-    margin-left: -7.2em;
+    margin-left: -8em;
 }
 
 #logo img{
-    height: 70px;
+    height: 100px;
     width: auto;
+}
+
+#logo.small{
+    display: none;
 }
 
 .table thead th{
@@ -239,7 +236,11 @@ div.dataTables_wrapper div.dataTables_length label, div.dataTables_wrapper div.d
 }
 
 div.dataTables_wrapper div .dataTables_filter{
-    margin-top:-55px;
+    margin-top:-130px;
+}
+
+#dTable_wrapper > .row:nth-child(1){
+    position: absolute;
 }
 
 .tooltip{
@@ -303,6 +304,33 @@ div.dataTables_wrapper div .dataTables_filter{
       width: 20%;
     }
 
+.sm-header{
+    font-size:12px;
+}
+
+th:nth-child(1){
+    line-height: 18px;
+}
+
+.dataTables_filter {
+    float: left !important;
+ }
+
+ .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #333333;
+    opacity: 1; /* Firefox */
+}
+
+.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #333333;
+}
+
+.form-control::-ms-input-placeholder { /* Microsoft Edge */
+    color: #333333;
+}
+
+
+
 /*MEDIA QUERIES*/
 
 @media screen and (max-width: 979px){
@@ -320,11 +348,36 @@ div.dataTables_wrapper div .dataTables_filter{
   th:nth-child(2), td:nth-child(2), th:nth-child(3), td:nth-child(3){
     width: 23%;
   } 
+  #header-title h1{
+      font-size:24px;
+  }
   }
   @media screen and (max-width: 549px){
     th:nth-child(1), td:nth-child(1){
     width: 22%;
   }
+
+  @media screen and (max-width: 525px){
+    #logo.large{
+        display: none;
+    }
+    #logo.small{
+        display: inline-flex;
+        margin-top: 21em;
+        margin-left: -3em;
+    }  
+    #logo img{
+        width: auto;
+        height: 30px;
+    }
+    
+    #header{
+          height: 320px;
+      }
+    div.dataTables_wrapper div .dataTables_filter{
+    margin-top:-130px;
+    }
+    }
   th:nth-child(5), td:nth-child(5){
     display: none;
   }
@@ -336,11 +389,11 @@ div.dataTables_wrapper div .dataTables_filter{
   }
 
 @media screen and (min-width:319px){
-    div.dataTables_wrapper div .dataTables_filter{
+    /* div.dataTables_wrapper div .dataTables_filter{
     justify-content:right;
     text-align: right;
     -webkit-box-pack: right;
-    }
+    } */
 }
 
 
