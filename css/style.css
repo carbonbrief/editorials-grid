@@ -386,6 +386,15 @@ th:nth-child(1){
     th:nth-child(1), td:nth-child(1){
     width: 26%;
   }
+  #header{
+      height: 350px;
+  }
+  #logo.small{
+    margin-top: 23.1em;
+  }
+  li.previous, li.next{
+      display: none;
+  }
   }
 
 @media screen and (max-width:380px){
